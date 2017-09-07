@@ -5,6 +5,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 
 public abstract class TestBase {
@@ -23,32 +25,44 @@ public abstract class TestBase {
 	public static Properties config=null;
 	public static WebDriver driver=null;
 	public static WebDriverWait wait=null;
-	private static boolean isInitialized=false;
+	public static boolean isInitalized=false;
 	
-	//Checking whether the driver is already initiated or not
-	protected TestBase()
-	{
-		if(!isInitialized)
-		{
-			initDriver();
+	
+	protected TestBase() {
+		if(!isInitalized){
+			initLogs();
 			
+			initDriver();
+		}
+	}
+	
+	
+//Initializing the driver
+	private static void initLogs(){
+		if (log == null){
+			// Initialize Log4j logs
+
+			DOMConfigurator.configure(System.getProperty("user.dir")+File.separator+"config"+File.separator+"log4j.xml");
+			log = Logger.getLogger("MyLogger");
+			log.info("Logger is initialized..");
 		}
 		
 	}
-//Initializing the driver
 	private static void initDriver() {
 		// TODO Auto-generated method stub
 		
 		
-		if(config.getProperty("browser").equalsIgnoreCase("Google Chrome")||config.getProperty("Browser").equalsIgnoreCase("Chrome"))
+		//if(config.getProperty("browser").equalsIgnoreCase("Google Chrome")||config.getProperty("Browser").equalsIgnoreCase("Chrome"))
+			boolean flag=true;
+			if(flag==true)
 		{	
-			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-			ChromeOptions options = new ChromeOptions();
-			options.addArguments("test-type");
+			//DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+			//ChromeOptions options = new ChromeOptions();
+			//options.addArguments("test-type");
 			//capabilities.setCapability("chrome.binary",System.getProperty("user.dir")+ File.separator +"drivers"+ File.separator +"chromedriver.exe");
-			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-			driver = new ChromeDriver(capabilities);
-			log.info(config.getProperty("browser")+" driver is initialized..");
+			//capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+			driver = new ChromeDriver();
+			log.info("Chrome driver is initialized..");
 		}
 		
 		else if(config.getProperty("browser").equalsIgnoreCase("Safari"))

@@ -3,14 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Ashish.TestProject.NewTest">
+      <class name="tests.GoogleSearchTest">
         <methods>
-          <include name="failedRetryTest"/>
-          <include name="afterTest"/>
-          <include name="facebookTitleCheck"/>
-          <include name="beforeTest"/>
+          <include name="googleSearch"/>
+          <include name="tearDown"/>
         </methods>
-      </class> <!-- Ashish.TestProject.NewTest -->
+      </class> <!-- tests.GoogleSearchTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
